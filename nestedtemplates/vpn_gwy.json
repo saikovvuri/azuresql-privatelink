@@ -1,0 +1,99 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "suffix": {
+            "type": "string",
+            "metadata": {
+                "description": "naming suffix based on resource group name hash"
+            }
+        },
+        "gatewaySku": {
+            "type": "string",
+            "defaultValue": "Basic",
+            "metadata": {
+                "description": "The SKU of the gateway"
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "location to deploy the vpn gateway"
+            }
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "virtual network name"
+            }
+        },       
+        "vpnClientAddressPoolPrefix": {
+            "type": "string",            
+            "metadata": {
+                "description": "The IP address range from which VPN clients will receive an IP address when connected. Range specified must not overlap with on-premise network."
+            }
+        }
+    },
+    "functions": [],
+    "variables": {
+        "gatewayName": "[concat('vpn-gwy-', parameters('suffix'))]",
+        "gatewaySubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'GatewaySubnet')]",
+        "gatewayPIPName": "[concat('vpn-gwy-publicip-', parameters('suffix'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2019-11-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('gatewayPIPName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic"
+            }
+        },
+        {
+            "apiVersion": "2018-04-01",
+            "type": "Microsoft.Network/virtualNetworkGateways",
+            "name": "[variables('gatewayName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+            "[concat('Microsoft.Network/publicIPAddresses/', variables('gatewayPIPName'))]"            
+            ],
+            "properties": {
+            "ipConfigurations": [
+                {
+                "properties": {
+                    "privateIPAllocationMethod": "Dynamic",
+                    "subnet": {
+                    "id": "[variables('gatewaySubnetRef')]"
+                    },
+                    "publicIPAddress": {
+                    "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('gatewayPIPName'))]"
+                    }
+                },
+                "name": "vnetGatewayConfig"
+                }
+            ],
+            "sku": {
+                "name": "[parameters('gatewaySku')]",
+                "tier": "[parameters('gatewaySku')]"
+            },
+            "gatewayType": "Vpn",
+            "vpnType": "RouteBased",
+            "enableBgp": "false",
+            "vpnClientConfiguration": {
+                    "vpnClientAddressPool": {
+                        "addressPrefixes": [
+                            "[parameters('vpnClientAddressPoolPrefix')]"
+                        ]
+                    }                    
+                }         
+            }
+        }
+    ],
+    "outputs": {
+         "gatewayName": {
+            "type": "string",
+            "value": "[variables('gatewayName')]"
+        }
+    }
+}
