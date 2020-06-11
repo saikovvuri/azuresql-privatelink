@@ -7,7 +7,7 @@
             "metadata": {
                 "description": "The base URI where artifacts required by this template are located including a trailing '/'"
             },
-            "defaultValue": "https://raw.githubusercontent.com/saikovvuri/azure-quickstart-templates/master/301-web-app-regional-vnet-private-endpoint-sql-storage/"
+            "defaultValue": "https://raw.githubusercontent.com/saikovvuri/azuresql-privatelink/master/"
         },
         "_artifactsLocationSasToken": {
             "type": "secureString",
