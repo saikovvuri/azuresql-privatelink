@@ -57,10 +57,10 @@
             ]
         },
         "sqlAdministratorLoginName": {
-            "value": "sqldbaadmin"
+            "value": "GEN-UNIQUE"
         },
         "sqlAdministratorLoginPassword": {
-            "value": "Kabootar@1218"
+            "value": "GEN-PASSWORD"
         },
         "vpnClientAddressPoolPrefix": {
             "value": "192.168.0.0/24"            

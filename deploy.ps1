@@ -77,8 +77,6 @@ LoginAzure
 CreateResourceGroup $ResourceGroupName $Location
 
 New-AzResourceGroupDeployment `
-    -Name sqlprivlnk `
-    -prefix $ResourceGroupName `
-    -ResourceGroupName $ResourceGroupName
+    -ResourceGroupName $ResourceGroupName `
     -TemplateFile .\azuredeploy.json `
     -TemplateParameterFile .\azuredeploy.parameters.json
