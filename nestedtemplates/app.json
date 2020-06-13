@@ -41,8 +41,8 @@
             "type": "string",            
             "metadata": {
             "description": "The Runtime stack of current web app"
-        }
-    },
+            }
+        }    
     },
     "variables": {
     },
