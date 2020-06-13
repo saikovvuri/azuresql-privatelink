@@ -75,7 +75,7 @@
         "privateDnsRecordNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/dns_record.json', parameters('_artifactsLocationSasToken')))]",
         "privateLinkIpConfigsNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/private_link_ipconfigs.json', parameters('_artifactsLocationSasToken')))]",
         "privateLinkIpConfigsHelperNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/private_link_ipconfigs_helper.json', parameters('_artifactsLocationSasToken')))]",
-        "vpnGatewayNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/vpn_gwy.json', parameters('_artifactsLocationSasToken')))]"
+        "vpnGatewayNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/vnet_gwy.json', parameters('_artifactsLocationSasToken')))]"
 
     },
     "resources": [
