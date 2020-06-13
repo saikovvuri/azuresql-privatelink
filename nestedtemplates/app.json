@@ -90,11 +90,9 @@
                         {
                             "name": "WEBSITE_DNS_SERVER",
                             "value": "168.63.129.16"
-                        },
-                        {
-                            "linuxFxVersion": "[parameters('linuxFxVersion')]"
-                        }
-                    ]
+                        }             
+                    ],
+                    "linuxFxVersion": "[parameters('linuxFxVersion')]"
                 }
             }
         }

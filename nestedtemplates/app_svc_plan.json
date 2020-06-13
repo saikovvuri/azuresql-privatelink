@@ -35,7 +35,11 @@
             "kind": "linux",
             "name": "[tolower(variables('serverFarmName'))]",
             "apiVersion": "2019-08-01",
-            "location": "[parameters('location')]"
+            "location": "[parameters('location')]",
+            "properties": {
+                "name": "[tolower(variables('serverFarmName'))]",
+                "reserved": true
+            }
         }
     ],
     "outputs": {
