@@ -157,8 +157,8 @@
                     },
                     "serverFarmSku": {
                         "value": {
-                            "Tier": "Standard",
-                            "Name": "S1"
+                            "Tier": "PremiumV2",
+                            "Name": "P1v2"
                         }
                     }
                 }
@@ -195,6 +195,9 @@
                         "value": [
                             "0.0.0.0/32"
                         ]
+                    },
+                    "linuxFxVersion" : {
+                        "value": "DOTNETCORE|3.1"
                     }
                 }
             }

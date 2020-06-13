@@ -16,8 +16,8 @@
         },
         "serverFarmSku": {
             "defaultValue": {
-                "Tier": "Standard",
-                "Name": "S1"
+                "Tier": "PremiumV2",
+                "Name": "P1v2"
             },
             "type": "object",
             "metadata": {
@@ -32,7 +32,7 @@
         {
             "type": "Microsoft.Web/serverfarms",
             "sku": "[parameters('serverFarmSku')]",
-            "kind": "app",
+            "kind": "linux",
             "name": "[tolower(variables('serverFarmName'))]",
             "apiVersion": "2019-08-01",
             "location": "[parameters('location')]"

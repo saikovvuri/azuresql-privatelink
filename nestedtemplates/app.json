@@ -36,7 +36,13 @@
             "metadata": {
                 "description": "resource id of subnet to use for app service reginal vnet integration"
             }
+        },
+        "linuxFxVersion" : {
+            "type": "string",            
+            "metadata": {
+            "description": "The Runtime stack of current web app"
         }
+    },
     },
     "variables": {
     },
@@ -84,6 +90,9 @@
                         {
                             "name": "WEBSITE_DNS_SERVER",
                             "value": "168.63.129.16"
+                        },
+                        {
+                            "linuxFxVersion": "[parameters('linuxFxVersion')]"
                         }
                     ]
                 }

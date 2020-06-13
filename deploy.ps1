@@ -4,13 +4,16 @@
 Param(
     [string]$Subscription = $env:AZURE_SUBSCRIPTION,
     [string]$ResourceGroupName = $env:AZURE_GROUP,
-    [string]$Location = $env:AZURE_LOCATION
+    [string]$Location = $env:AZURE_LOCATION,
+    [string]$SqlDbLogin,
+    [string]$SqlDbLoginPassword
 )
 
 if ( !$Subscription) { throw "Subscription Required" }
 if ( !$ResourceGroupName) { throw "ResourceGroupName Required" }
 if ( !$Location) { throw "Location Required" }
-
+if ( !$SqlDbLogin) { throw "SQL admin login is required"}
+if ( !$SqlDbLoginPassword) {throw "SQL admin password is required"}
 
 function Write-Color([String[]]$Text, [ConsoleColor[]]$Color = "White", [int]$StartTab = 0, [int] $LinesBefore = 0, [int] $LinesAfter = 0, [string] $LogFile = "", $TimeFormat = "yyyy-MM-dd HH:mm:ss") {
     # version 0.2
@@ -76,7 +79,12 @@ function CreateResourceGroup([string]$ResourceGroupName, [string]$Location) {
 LoginAzure
 CreateResourceGroup $ResourceGroupName $Location
 
+$SecureSqlPassword = ConvertTo-SecureString $SqlDbLoginPassword -AsPlainText -Force
+
 New-AzResourceGroupDeployment `
     -ResourceGroupName $ResourceGroupName `
     -TemplateFile .\azuredeploy.json `
-    -TemplateParameterFile .\azuredeploy.parameters.json
+    -TemplateParameterFile .\azuredeploy.parameters.json `
+    -sqlAdministratorLoginName $SqlDbLogin `
+    -sqlAdministratorLoginPassword $SecureSqlPassword
+    
