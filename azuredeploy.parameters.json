@@ -36,6 +36,15 @@
                             "delegations": null,
                             "privateEndpointNetworkPolicies": "Disabled",
                             "privateLinkServiceNetworkPolicies": "Disabled"
+                        },
+                        {
+                            "name": "AzureBastionSubnet",
+                            "addressPrefix": "10.1.240.128/27",
+                            "udrName": null,
+                            "nsgName": null,
+                            "delegations": null,
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Disabled"
                         }
                     ]
                 },
