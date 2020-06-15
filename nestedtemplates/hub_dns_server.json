@@ -36,7 +36,7 @@
     "variables": {
         "virtualMachineName": "[concat('dns-svr-', parameters('suffix'))]",
         "networkInterfaceName": "[concat(variables('virtualMachineName'), '-nic-', parameters('suffix'))]",
-         "scriptURL": "[concat(parameters('_artifactsLocation'),'/scripts/installsoftware.ps1')]"
+         "scriptURL": "[concat(parameters('_artifactsLocation'),'/scripts/installdnsrole.ps1')]"
     },
     "resources": [
         {
@@ -125,7 +125,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./installsoftware.ps1"
+                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./installdnsrole.ps1"
                 }
             }
         }
