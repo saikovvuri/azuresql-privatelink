@@ -34,7 +34,7 @@
         }
     },
     "variables": {
-        "virtualMachineName": "[concat('dns-server-', parameters('suffix'))]",
+        "virtualMachineName": "[concat('dns-svr-', parameters('suffix'))]",
         "networkInterfaceName": "[concat(variables('virtualMachineName'), '-nic-', parameters('suffix'))]",
          "scriptURL": "[concat(parameters('_artifactsLocation'),'/scripts/installsoftware.ps1')]"
     },
