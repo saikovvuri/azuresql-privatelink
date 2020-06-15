@@ -122,8 +122,7 @@
                 "settings": {
                     "fileUris": [
                         "[variables('scriptURL')]"
-                    ],
-                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./installsoftware.ps1"
+                    ]
                 },
                 "protectedSettings": {
                     "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./installsoftware.ps1"
