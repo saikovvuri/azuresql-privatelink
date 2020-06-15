@@ -53,6 +53,18 @@
             "metadata": {
                 "description": "The IP address range from which VPN clients will receive an IP address when connected. Range specified must not overlap with on-premise network."
             }
+        },
+        "dnsServerAdminUserName": {
+            "type": "string",
+            "metadata": {
+                "description": "DNS Server login name"
+            }
+        },
+        "dnsServerAdminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "DNS Server login password"
+            }
         }
     },
     "variables": {
@@ -76,7 +88,8 @@
         "privateLinkIpConfigsNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/private_link_ipconfigs.json', parameters('_artifactsLocationSasToken')))]",
         "privateLinkIpConfigsHelperNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/private_link_ipconfigs_helper.json', parameters('_artifactsLocationSasToken')))]",
         "vpnGatewayNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/vnet_gwy.json', parameters('_artifactsLocationSasToken')))]",
-        "bastionHostNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/bastion_host.json', parameters('_artifactsLocationSasToken')))]"
+        "bastionHostNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/bastion_host.json', parameters('_artifactsLocationSasToken')))]",
+        "hubDnsServerNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/hub_dns_server.json', parameters('_artifactsLocationSasToken')))]"
     },
     "resources": [
         {
@@ -503,6 +516,43 @@
                     }
                 }
             }
+        },
+        {
+            "comments": "",
+            "name": "linkedTemplate-hub-dns-server",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('hubDnsServerNestedTemplateUri')]"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "suffix": {
+                        "value": "[variables('suffix')]"
+                    },        
+                    "subnetId": {
+                        "value": "[reference(resourceId('Microsoft.Resources/deployments', 'linkedTemplate-vnet-0')).outputs.subnetResourceIds.value[2].id]"
+                    },                         
+                    "osDiskType": {
+                        "value": "Premium_LRS"
+                    },
+                    "virtualMachineSize": {
+                        "value": "Standard_D2s_v3"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('dnsServerAdminUserName')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('dnsServerAdminPassword')]"
+                    }
+                }
+            }
+            
         }
     ]
 }
