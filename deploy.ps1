@@ -93,5 +93,5 @@ New-AzResourceGroupDeployment `
     -sqlAdministratorLoginName $SqlDbLogin `
     -sqlAdministratorLoginPassword $SecureSqlPassword `
     -dnsServerAdminUserName $DnsServerLogin `
-    -dnsServerAdminPassword $SecureDnsPassword `
+    -dnsServerAdminPassword $SecureDnsPassword
     
