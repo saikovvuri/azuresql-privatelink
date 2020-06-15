@@ -529,6 +529,9 @@
                     "uri": "[variables('hubDnsServerNestedTemplateUri')]"
                 },
                 "parameters": {
+                    "_artifactsLocation": {
+                        "value": "[parameters('_artifactsLocation')]"
+                    },
                     "location": {
                         "value": "[parameters('location')]"
                     },
