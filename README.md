@@ -62,4 +62,4 @@ To validate that the web app can resolve the private endpoints for the Azure SQL
 
 ### Architecture Diagram
 
-![Architecture diagram](./azuresqlprivatelink_solutionarchitecture.png "Solution Architecture")
+![Architecture diagram](./AzureSqlPrivateLink_SolutionArchitecture.PNG "Solution Architecture")
