@@ -89,7 +89,8 @@
         "privateLinkIpConfigsHelperNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/private_link_ipconfigs_helper.json', parameters('_artifactsLocationSasToken')))]",
         "vpnGatewayNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/vnet_gwy.json', parameters('_artifactsLocationSasToken')))]",
         "bastionHostNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/bastion_host.json', parameters('_artifactsLocationSasToken')))]",
-        "hubDnsServerNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/hub_dns_server.json', parameters('_artifactsLocationSasToken')))]"
+        "hubDnsServerNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/hub_dns_server.json', parameters('_artifactsLocationSasToken')))]",
+         "userAssignedIdentityNestedTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/user_assigned_identity.json', parameters('_artifactsLocationSasToken')))]"
     },
     "resources": [
         {
@@ -183,7 +184,8 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "dependsOn": [
-                "linkedTemplate-app-svc-plan"
+                "linkedTemplate-app-svc-plan",
+                "linkedTemplate-user-assigned-identity"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -211,6 +213,9 @@
                     },
                     "linuxFxVersion" : {
                         "value": "DOTNETCORE|3.1"
+                    },
+                    "userAssignedIdentityName": {
+                        "value": "[reference(resourceId('Microsoft.Resources/deployments', 'linkedTemplate-user-assigned-identity')).outputs.identityName.value]"
                     }
                 }
             }
@@ -518,7 +523,7 @@
             }
         },
         {
-            "comments": "",
+            "comments": "This deployment links to the hub_dns_server.json nested ARM template",
             "name": "linkedTemplate-hub-dns-server",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
@@ -554,8 +559,29 @@
                         "value": "[parameters('dnsServerAdminPassword')]"
                     }
                 }
+            }            
+        },
+        {
+            "comments": "",
+            "name": "linkedTemplate-user-assigned-identity",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "contentVersion": "1.0.0.0",
+                    "uri": "[variables('userAssignedIdentityNestedTemplateUri')]"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "suffix": {
+                        "value": "[variables('suffix')]"
+                    }
+                }
             }
-            
+
         }
     ]
 }

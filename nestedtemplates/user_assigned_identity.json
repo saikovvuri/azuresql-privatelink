@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+       "location": {
+            "type": "string"
+        },
+        "suffix": {
+            "type": "string",
+            "metadata": {
+                "description": "naming suffix based on resource group name hash"
+            }
+        }
+    },
+    "variables": {
+        "userAssignedIdentityName" : "[concat('webapprunas-', parameters('suffix'))]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+        "name": "[variables('userAssignedIdentityName')]",
+        "apiVersion": "2018-11-30",
+        "location": "[resourceGroup().location]"
+      }
+    ],
+    "outputs": {
+        "identityName": {
+            "type": "string",
+            "value": "[variables('userAssignedIdentityName')]"
+        }
+    }
+}

@@ -40,11 +40,18 @@
         "linuxFxVersion" : {
             "type": "string",            
             "metadata": {
-            "description": "The Runtime stack of current web app"
+                "description": "The Runtime stack of current web app"
             }
-        }    
+        }, 
+        "userAssignedIdentityName": {
+            "type": "string",
+            "metadata": {
+                "description": "user identity name"
+            }
+        }
     },
     "variables": {
+        "identityResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]"
     },
     "resources": [
         {
@@ -52,6 +59,15 @@
             "name": "[tolower(parameters('appName'))]",
             "apiVersion": "2019-08-01",
             "location": "[parameters('location')]",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[variables('identityResourceId')]": {
+                        "principalId": "[reference(variables('identityResourceId'), '2018-11-30').principalId]",
+                        "clientId": "[reference(variables('identityResourceId'), '2018-11-30').clientId]"
+                    }
+                }
+            },
             "resources": [
                 {
                     "apiVersion": "2019-08-01",
@@ -90,6 +106,10 @@
                         {
                             "name": "WEBSITE_DNS_SERVER",
                             "value": "168.63.129.16"
+                        },
+                        {
+                            "name": "AzureServicesAuthConnectionString",
+                            "value": "[concat('RunAs=App;AppId=', reference(variables('identityResourceId'), '2018-11-30').clientId)]"
                         }             
                     ],
                     "linuxFxVersion": "[parameters('linuxFxVersion')]"
