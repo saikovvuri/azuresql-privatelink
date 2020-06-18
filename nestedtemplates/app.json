@@ -48,10 +48,23 @@
             "metadata": {
                 "description": "user identity name"
             }
+        },
+        "userAssignedIdentityPrincipalId": {
+            "type": "string",
+            "metadata": {
+                "description": "user identity principal id"
+            }
+        },
+        "userAssignedIdentityClientId": {
+            "type": "string",
+            "metadata": {
+                "description": "user identity client id"
+            }
         }
     },
     "variables": {
         "identityResourceId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]"
+        
     },
     "resources": [
         {
@@ -63,8 +76,8 @@
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
                     "[variables('identityResourceId')]": {
-                        "principalId": "[reference(variables('identityResourceId'), '2018-11-30').principalId]",
-                        "clientId": "[reference(variables('identityResourceId'), '2018-11-30').clientId]"
+                        "principalId": "[parameters('userAssignedIdentityPrincipalId')]",
+                        "clientId": "[parameters('userAssignedIdentityClientId')]"
                     }
                 }
             },
@@ -109,7 +122,7 @@
                         },
                         {
                             "name": "AzureServicesAuthConnectionString",
-                            "value": "[concat('RunAs=App;AppId=', reference(variables('identityResourceId'), '2018-11-30').clientId)]"
+                            "value": "[concat('RunAs=App;AppId=', parameters('userAssignedIdentityClientId'))]"
                         }             
                     ],
                     "linuxFxVersion": "[parameters('linuxFxVersion')]"
