@@ -216,12 +216,6 @@
                     },
                     "userAssignedIdentityName": {
                         "value": "[reference(resourceId('Microsoft.Resources/deployments', 'linkedTemplate-user-assigned-identity')).outputs.identityName.value]"
-                    },
-                    "userAssignedIdentityPrincipalId": {
-                        "value": "[reference(reference(resourceId('Microsoft.Resources/deployments', 'linkedTemplate-user-assigned-identity')).outputs.identityName.value, '2018-11-30').principalId]"
-                    },
-                    "userAssignedIdentityClientId": {
-                        "value": "[reference(reference(resourceId('Microsoft.Resources/deployments', 'linkedTemplate-user-assigned-identity')).outputs.identityName.value, '2018-11-30').clientId]"
                     }
                 }
             }

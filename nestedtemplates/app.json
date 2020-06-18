@@ -48,18 +48,6 @@
             "metadata": {
                 "description": "user identity name"
             }
-        },
-        "userAssignedIdentityPrincipalId": {
-            "type": "string",
-            "metadata": {
-                "description": "user identity principal id"
-            }
-        },
-        "userAssignedIdentityClientId": {
-            "type": "string",
-            "metadata": {
-                "description": "user identity client id"
-            }
         }
     },
     "variables": {
@@ -75,10 +63,7 @@
             "identity": {
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
-                    "[variables('identityResourceId')]": {
-                        "principalId": "[parameters('userAssignedIdentityPrincipalId')]",
-                        "clientId": "[parameters('userAssignedIdentityClientId')]"
-                    }
+                    "[variables('identityResourceId')]": {}
                 }
             },
             "resources": [
@@ -122,7 +107,7 @@
                         },
                         {
                             "name": "AzureServicesAuthConnectionString",
-                            "value": "[concat('RunAs=App;AppId=', parameters('userAssignedIdentityClientId'))]"
+                            "value": "[concat('RunAs=App;AppId=', reference(variables('identityResourceId'), '2018-11-30').clientId)]"
                         }             
                     ],
                     "linuxFxVersion": "[parameters('linuxFxVersion')]"
