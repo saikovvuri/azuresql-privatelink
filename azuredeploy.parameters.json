@@ -88,8 +88,8 @@
                             "privateLinkServiceNetworkPolicies": "Disabled"
                         },
                         {
-                            "name": "GatewaySubnet",
-                            "addressPrefix": "10.3.255.224/27",
+                            "name": "DnsSubnet",
+                            "addressPrefix": "10.3.240.224/27",
                             "udrName": null,
                             "nsgName": null,
                             "delegations": null,
@@ -97,8 +97,8 @@
                             "privateLinkServiceNetworkPolicies": "Disabled"
                         },
                         {
-                            "name": "DnsSubnet",
-                            "addressPrefix": "10.3.240.224/27",
+                            "name": "AzureBastionSubnet",
+                            "addressPrefix": "10.3.240.128/27",
                             "udrName": null,
                             "nsgName": null,
                             "delegations": null,
